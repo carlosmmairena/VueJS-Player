@@ -1,4 +1,6 @@
-# vuejs-player
+# VueJS-Player
+
+A player video using Vuetify. It'll use a JSON file as a Data Base to get information and show you a playlist.
 
 ## Project setup
 ```
@@ -19,6 +21,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

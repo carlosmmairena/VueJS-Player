@@ -2,7 +2,9 @@
   <v-app>
 
     <v-main>
-      <Player />
+      <div class="d-flex align-center mx-auto" :style="{ width: '960px' }">
+        <Player />
+      </div>
     </v-main>
 
   </v-app>

@@ -1,6 +1,10 @@
 <template>
-    <div>
-        <h1>Hola, soy el reproductor!!!</h1>
+    <div class="player">
+        <div class="player__sizer">
+            <video controls>
+                <source type="video/mp4" src="@/assets/videos/my_video.mp4"/>
+            </video>
+        </div>
     </div>
 </template>
 

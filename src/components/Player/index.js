@@ -1,1 +1,1 @@
-export { default } from './Player.vue';
+export { default } from "./Player.vue";

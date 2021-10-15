@@ -1,15 +1,18 @@
 <template>
-    <div class="player">
-        <div class="player__sizer">
+    <v-container class="player">
+        <v-container class="player__sizer">
             <video controls>
                 <source type="video/mp4" src="@/assets/videos/my_video.mp4"/>
             </video>
-        </div>
-    </div>
+        </v-container>
+    </v-container>
 </template>
 
 <script>
+import "./Player.scss";
+
 export default {
-    name: 'Player',
+    name: "Player",
 }
+
 </script>

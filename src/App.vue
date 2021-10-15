@@ -3,7 +3,8 @@
 
     <v-main>
       <v-container class="d-flex align-center mx-auto fill-height" :style="{ width: '70%' }">
-        <Player />
+        <!-- <Player /> -->
+        <slider />
       </v-container>
     </v-main>
 
@@ -12,13 +13,15 @@
 
 <script>
 
-import Player from './components/Player';
+import Slider from './components/Slider/Slider.vue';
+//import Player from './components/Player';
 
 export default {
   name: "App",
 
   components: {
-    Player,
+    //Player,
+    Slider,
   },
 
   data: () => ({

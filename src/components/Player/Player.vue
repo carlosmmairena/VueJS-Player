@@ -34,8 +34,8 @@
                 <Slider 
                     class="player__sound-slider"
                     :style="{ width: '96px' }"
-                    :current_value="value"
-                    @input="val => (value = val)"
+                    :current_value="isMuted ? 0 : volume"
+                    @input="onVolumeSliderChange"
                 />
 
                 <div class="player__time ml-4">
@@ -67,6 +67,7 @@ export default {
         value: 1,
         isPlaying: false,
         isMuted: false,
+        volume: 1
     }),
 
     mounted() {
@@ -85,6 +86,21 @@ export default {
         onVideoVolumeChange() {
             const { video } = this.$refs;
             this.isMuted = video.muted;
+            this.volume  = video.volume
+        },
+
+        onVolumeSliderChange(value) {
+            const { video } = this.$refs;
+
+            if(value <= 0) {
+                video.muted = true;
+            }
+
+            if(!video.muted || value > 0) {
+                video.muted = false;
+            }
+
+            video.volume = value;
         },
 
         documentKeyUp(ev) {

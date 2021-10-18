@@ -6,6 +6,8 @@
                 @pause="onVideoPause"
                 @volumechange="onVideoVolumeChange"
                 @click="togglePlay"
+                @loadedmetadata="onVideoLoadedMetaData"
+                @timeupdate="onTimeUpdated"
                 ref="video"
             >
                 <source type="video/mp4" src="@/assets/videos/my_video.mp4"/>
@@ -18,7 +20,7 @@
             <v-toolbar dense color="transparent" flat class="player__toolbar">
                 <v-btn color="white" icon @click="togglePlay">
                     <v-icon>
-                        {{ isPlaying ? "mdi-pause" : "mdi-play" }}
+                        {{ is_playing ? "mdi-pause" : "mdi-play" }}
                     </v-icon>
                 </v-btn>
 
@@ -27,25 +29,27 @@
                     @click="toggleSound"
                 >
                     <v-icon>
-                        {{ isMuted ? "mdi-volume-off" : "mdi-volume-high" }}
+                        {{ is_muted ? "mdi-volume-off" : "mdi-volume-high" }}
                     </v-icon>
                 </v-btn>
 
                 <Slider 
                     class="player__sound-slider"
                     :style="{ width: '96px' }"
-                    :current_value="isMuted ? 0 : volume"
+                    :current_value="is_muted ? 0 : volume"
                     @input="onVolumeSliderChange"
                 />
 
                 <div class="player__time ml-4">
-                    00:00:00
+                    {{ currentTimeFormatted }} / {{ durationFormatted }}
                 </div>
 
                 <v-spacer />
 
-                <v-btn color="white" icon>
-                    <v-icon>mdi-fullscreen</v-icon>
+                <v-btn color="white" icon @click="toggleFullScreen">
+                    <v-icon>
+                        {{ is_fullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen' }}
+                    </v-icon>
                 </v-btn>
             </v-toolbar>
         </div>
@@ -55,6 +59,8 @@
 <script>
 import "./Player.scss";
 import Slider from "@/components/Slider";
+const TimeFormat = require('hh-mm-ss');
+const screenfull = require('screenfull');
 
 export default {
     name: "Player",
@@ -65,27 +71,41 @@ export default {
 
     data: () => ({
         value: 1,
-        isPlaying: false,
-        isMuted: false,
-        volume: 1
+        is_playing: false,
+        is_muted: false,
+        volume: 1,
+        duration: 0,
+        current_time: 0,
+        is_fullscreen: false,
     }),
+
+    computed: {
+        currentTimeFormatted() {
+            return TimeFormat.fromS(Math.round(this.current_time), 'hh:mm:ss');
+        },
+
+        durationFormatted() {
+            return TimeFormat.fromS(Math.round(this.duration), 'hh:mm:ss');
+        }
+    },
 
     mounted() {
         document.addEventListener('keyup', this.documentKeyUp);
+        screenfull.onchange(this.onFullscreeChange);
     },
 
     methods: {
         onVideoPlay() {
-            this.isPlaying = true;
+            this.is_playing = true;
         },
 
         onVideoPause() {
-            this.isPlaying = false;
+            this.is_playing = false;
         },
 
         onVideoVolumeChange() {
             const { video } = this.$refs;
-            this.isMuted = video.muted;
+            this.is_muted = video.muted;
             this.volume  = video.volume
         },
 
@@ -109,6 +129,23 @@ export default {
             }
         },
 
+        onVideoLoadedMetaData() {
+            const { video } = this.$refs;
+
+            this.duration     = video.duration;
+            this.current_time = video.currentTime;
+        },
+
+        onTimeUpdated() {
+            const { video } = this.$refs;
+
+            this.current_time = video.currentTime;
+        },
+
+        onFullscreeChange() {
+            this.is_fullscreen = this.$el == screenfull.element;
+        },
+
         togglePlay() {
             const { video } = this.$refs;
 
@@ -123,6 +160,20 @@ export default {
             const { video } = this.$refs;
             video.muted = !video.muted;
         },
+
+        toggleFullScreen() {
+            if (!screenfull.isEnabled) {
+                return;
+            }
+
+            const { $el } = this;
+            
+            if (screenfull.element == $el) {
+                screenfull.exit();
+            } else {
+                screenfull.request($el);
+            }
+        }
 
     },
 

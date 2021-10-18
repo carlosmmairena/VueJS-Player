@@ -7,7 +7,6 @@
         :style="{ width: '60%' }"
       >
         <Player />
-        <!-- <slider :current_value="value" @input="val => (value = val)" /> -->
       </v-container>
     </v-main>
 

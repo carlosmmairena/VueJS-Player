@@ -4,6 +4,7 @@
             <video 
                 @play="onVideoPlay"
                 @pause="onVideoPause"
+                @volumechange="onVideoVolumeChange"
                 @click="togglePlay"
                 ref="video"
             >
@@ -21,8 +22,13 @@
                     </v-icon>
                 </v-btn>
 
-                <v-btn color="white" icon>
-                    <v-icon>mdi-volume-high</v-icon>
+                <v-btn color="white" 
+                    icon 
+                    @click="toggleSound"
+                >
+                    <v-icon>
+                        {{ isMuted ? "mdi-volume-off" : "mdi-volume-high" }}
+                    </v-icon>
                 </v-btn>
 
                 <Slider 
@@ -60,6 +66,7 @@ export default {
     data: () => ({
         value: 1,
         isPlaying: false,
+        isMuted: false,
     }),
 
     mounted() {
@@ -73,6 +80,11 @@ export default {
 
         onVideoPause() {
             this.isPlaying = false;
+        },
+
+        onVideoVolumeChange() {
+            const { video } = this.$refs;
+            this.isMuted = video.muted;
         },
 
         documentKeyUp(ev) {
@@ -89,6 +101,11 @@ export default {
             } else {
                 video.pause();
             }
+        },
+
+        toggleSound() {
+            const { video } = this.$refs;
+            video.muted = !video.muted;
         },
 
     },

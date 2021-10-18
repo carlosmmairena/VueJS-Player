@@ -2,9 +2,12 @@
   <v-app>
 
     <v-main>
-      <v-container class="d-flex align-center mx-auto fill-height" :style="{ width: '70%' }">
+      <v-container 
+        class="d-flex align-center mx-auto fill-height" 
+        :style="{ width: '70%' }"
+        >
         <!-- <Player /> -->
-        <slider />
+        <slider :current_value="value" @input="val => (value = val)" />
       </v-container>
     </v-main>
 
@@ -25,7 +28,7 @@ export default {
   },
 
   data: () => ({
-    //
+    value: 0.5,
   }),
 };
 </script>

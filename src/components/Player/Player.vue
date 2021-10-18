@@ -9,6 +9,10 @@
                 @loadedmetadata="onVideoLoadedMetaData"
                 @timeupdate="onTimeUpdated"
                 @playing="onVideoProgress"
+                @loadstart="is_loading = true"
+                @loadeddata="is_loading = false"
+                @waiting="is_waiting = true"
+                @canplay="is_waiting = false"
                 ref="video"
             >
                 <source type="video/mp4" src="@/assets/videos/my_video.mp4"/>
@@ -16,6 +20,10 @@
         </div>
 
         <div class="player__gradient" />
+
+        <div class="player__loader" v-show="is_loading || is_waiting">
+            <v-progress-circular :size="128" color="white" indeterminate/>
+        </div>
 
         <div class="player__controls">
                 <Slider 
@@ -89,6 +97,8 @@ export default {
         current_time: 0,
         is_fullscreen: false,
         buffered: 0,
+        is_waiting: false,
+        is_loading: false
     }),
 
     computed: {

@@ -46,6 +46,13 @@
         background-color: rgba(185, 185, 184, 0.438);
     }
 
+    &__loader {
+        position: absolute;
+        top: calc(50% - 64px);
+        left: calc(50% - 64px);
+        z-index: 1;
+    }
+
     &__time {
         color: white;
     }

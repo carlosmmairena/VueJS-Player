@@ -29,7 +29,7 @@
         width: 16px;
         height: 16px;
         border-radius: 50%;
-        background-color: #000;
+        background-color: #fff;
         position: absolute;
         left: 0;
         top: calc(50% - 8px);
@@ -39,7 +39,7 @@
     &__fill {
         width: 100%;
         height: 100%;
-        background-color: pink;
+        background-color: rgb(62, 204, 192);
     }
 
 

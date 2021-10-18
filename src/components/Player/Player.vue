@@ -8,6 +8,7 @@
                 @click="togglePlay"
                 @loadedmetadata="onVideoLoadedMetaData"
                 @timeupdate="onTimeUpdated"
+                @playing="onVideoProgress"
                 ref="video"
             >
                 <source type="video/mp4" src="@/assets/videos/my_video.mp4"/>
@@ -17,6 +18,16 @@
         <div class="player__gradient" />
 
         <div class="player__controls">
+                <Slider 
+                    class="player__seeker"
+                    :max="duration"
+                    :current_value="current_time"
+                    @input="seek"
+                >
+                    <template #bar>
+                        <div class="player__seeker-buffered" :style="bufferedStyle" />
+                    </template>
+                </Slider>
             <v-toolbar dense color="transparent" flat class="player__toolbar">
                 <v-btn color="white" icon @click="togglePlay">
                     <v-icon>
@@ -77,6 +88,7 @@ export default {
         duration: 0,
         current_time: 0,
         is_fullscreen: false,
+        buffered: 0,
     }),
 
     computed: {
@@ -86,6 +98,13 @@ export default {
 
         durationFormatted() {
             return TimeFormat.fromS(Math.round(this.duration), 'hh:mm:ss');
+        },
+
+        bufferedStyle() {
+            return {
+                transformOrigin: 'left center',
+                transform: `scaleX(${this.buffered})`
+            };
         }
     },
 
@@ -121,6 +140,25 @@ export default {
             }
 
             video.volume = value;
+        },
+
+        onVideoProgress() {
+            const { video }    = this.$refs;
+            const { duration } = video;
+
+            if (duration > 0) {
+                const { currentTime, buffered } = video;
+                const bufferedLength = buffered.length;
+
+                for (let index = 0; index < bufferedLength; index++) {
+                    const start = buffered.start(index);
+                    const end   = buffered.end(index);
+                    
+                    if (start < currentTime && end > currentTime){
+                        this.buffered = end / duration;
+                    }
+                }
+            }
         },
 
         documentKeyUp(ev) {
@@ -173,7 +211,14 @@ export default {
             } else {
                 screenfull.request($el);
             }
-        }
+        },
+
+        seek(time) {
+            const { video } = this.$refs;
+
+            this.current_time = time;
+            video.currentTime = time;
+        },
 
     },
 

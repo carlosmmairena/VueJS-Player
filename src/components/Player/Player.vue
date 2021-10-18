@@ -15,7 +15,7 @@
                 @canplay="is_waiting = false"
                 ref="video"
             >
-                <source type="video/mp4" src="@/assets/videos/my_video.mp4"/>
+                <source :type="source.type" :src="source.src"/>
             </video>
         </div>
 
@@ -88,6 +88,14 @@ export default {
         Slider
     },
 
+    props: {
+        source: {
+            type: Object,
+            require: true,
+            validator: source => source.type && source.src
+        }
+    },
+
     data: () => ({
         value: 1,
         is_playing: false,
@@ -115,6 +123,19 @@ export default {
                 transformOrigin: 'left center',
                 transform: `scaleX(${this.buffered})`
             };
+        }
+    },
+
+    watch: {
+        source() {
+            this.is_playing   = false;
+            this.is_waiting   = false;
+            this.buffered     = 0;
+            this.current_time = 0
+
+            this.$nextTick(() => {
+                this.$refs.video.load();
+            })
         }
     },
 

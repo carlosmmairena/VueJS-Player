@@ -6,7 +6,11 @@
         class="d-flex align-center mx-auto fill-height" 
         :style="{ width: '60%' }"
       >
-        <Player />
+        <Player :source="{ src, type: 'video/mp4' }" />
+
+        <v-btn color="primary" @click=" src = require('@/assets/videos/ansible_tutorial.mp4') ">
+          Change Video >
+        </v-btn>
       </v-container>
     </v-main>
 
@@ -25,7 +29,7 @@ export default {
   },
 
   data: () => ({
-    value: 0.5,
+    src: require("@/assets/videos/my_video.mp4"),
   }),
 };
 </script>

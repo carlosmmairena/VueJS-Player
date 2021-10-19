@@ -1,25 +1,27 @@
 {
-    "0": {
-        "id": 1,
-        "title": "Título del video 1",
-        "source": "videos/my_video.mp4",
-        "description": "Esta es una descripcion del video",
-        "created_at": "2021-10-08"
-    },
+    "videos": [
+        {
+            "id": 1,
+            "title": "Título del video 1",
+            "source": "videos/my_video.mp4",
+            "description": "Esta es una descripcion del video",
+            "created_at": "2021-10-08"
+        },
 
-    "1": {
-        "id": 2,
-        "title": "Título del video 2",
-        "source": "videos/my_video.mp4",
-        "description": "Esta es una descripcion del video",
-        "created_at": "2021-10-08"
-    },
+        {
+            "id": 2,
+            "title": "Título del video 2",
+            "source": "videos/my_video.mp4",
+            "description": "Esta es una descripcion del video",
+            "created_at": "2021-10-08"
+        },
 
-    "2": {
-        "id": 3,
-        "title": "Título del video 3",
-        "source": "videos/my_video.mp4",
-        "description": "Esta es una descripcion del video",
-        "created_at": "2021-10-08"
-    }
+        {
+            "id": 3,
+            "title": "Título del video 3",
+            "source": "videos/ansible_tutorial.mp4",
+            "description": "Esta es una descripcion del video",
+            "created_at": "2021-10-08"
+        }
+    ]
 }

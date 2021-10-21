@@ -14,13 +14,13 @@
           <Playlist :playlist="videosJSON"></Playlist>
         </v-navigation-drawer>
 
-        <v-col class="col-12">
-          <v-content
+        <v-col class="col-10">
+          <v-container
               class="d-flex align-center mx-auto fill-height" 
               :style="{ width: '100%' }"
           >
             <Player :source="{ src, type: 'video/mp4' }" />
-          </v-content>
+          </v-container>
         </v-col>
       </v-row>
 

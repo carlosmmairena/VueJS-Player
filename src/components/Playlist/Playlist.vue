@@ -19,6 +19,10 @@
                         <v-list-item-title v-html="video.title"></v-list-item-title>
                         <v-list-item-subtitle v-html="video.description"></v-list-item-subtitle>
                     </v-list-item-content>
+
+                    <v-list-item-action>
+                        <v-list-item-action-text v-text="video.created_at"></v-list-item-action-text>
+                    </v-list-item-action>
                 </v-list-item>
             </v-list-item-group>
         </v-list>

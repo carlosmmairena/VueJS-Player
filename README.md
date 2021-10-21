@@ -1,6 +1,10 @@
-# VueJS-Player
+# VueJS Video Player 📺
 
-A player video using Vuetify. It'll use a JSON file as a Data Base to get information and show you a playlist.
+It use a JSON file as Data Base to get the information of videos and show in the playlist.   
+Before start, you need to know the following:  
+
+1. Copy the videos in the *./src/assets/videos/* folder.
+2. Write the information of videos in the *./src/data/allVideos.json* file.  
 
 ## Project setup
 ```
